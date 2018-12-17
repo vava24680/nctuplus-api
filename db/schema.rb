@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_17_051742) do
+ActiveRecord::Schema.define(version: 2018_10_06_154430) do
+
+  create_table "backgrounds", force: :cascade do |t|
+    t.string "cover_image"
+    t.integer "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_backgrounds_on_author_id"
+  end
 
   create_table "books", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -19,7 +27,7 @@ ActiveRecord::Schema.define(version: 2018_10_17_051742) do
     t.string "info"
     t.string "cover_image"
     t.string "preview_url"
-    t.bigint "user_id"
+    t.integer "user_id"
     t.integer "price", default: 0, null: false
     t.integer "status", default: 0, null: false
     t.integer "view_count", default: 0, null: false
@@ -46,7 +54,7 @@ ActiveRecord::Schema.define(version: 2018_10_17_051742) do
     t.integer "category"
     t.datetime "begin_time"
     t.datetime "end_time"
-    t.bigint "author_id"
+    t.integer "author_id"
     t.index ["author_id"], name: "index_bulletins_on_author_id"
   end
 
@@ -80,11 +88,11 @@ ActiveRecord::Schema.define(version: 2018_10_17_051742) do
     t.integer "exam_record"
     t.integer "rollcall_frequency"
     t.integer "view_count", default: 0
-    t.bigint "last_edit_user_id"
-    t.bigint "permanent_course_id"
+    t.integer "last_edit_user_id"
+    t.integer "permanent_course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "semester_id"
+    t.integer "semester_id"
     t.index ["last_edit_user_id"], name: "index_courses_on_last_edit_user_id"
     t.index ["permanent_course_id"], name: "index_courses_on_permanent_course_id"
     t.index ["semester_id"], name: "index_courses_on_semester_id"
@@ -95,7 +103,7 @@ ActiveRecord::Schema.define(version: 2018_10_17_051742) do
     t.integer "category", default: 0, null: false
     t.string "department_type", limit: 1
     t.string "code", limit: 2
-    t.bigint "college_id"
+    t.integer "college_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["college_id"], name: "index_departments_on_college_id"
@@ -110,7 +118,7 @@ ActiveRecord::Schema.define(version: 2018_10_17_051742) do
     t.string "content"
     t.datetime "begin_time"
     t.datetime "end_time"
-    t.bigint "user_id"
+    t.integer "user_id"
     t.integer "view_count", default: 0
     t.string "cover_image"
     t.datetime "created_at", null: false
@@ -123,8 +131,8 @@ ActiveRecord::Schema.define(version: 2018_10_17_051742) do
     t.string "description"
     t.integer "download_count", default: 0
     t.string "file"
-    t.bigint "uploader_id"
-    t.bigint "course_id"
+    t.integer "uploader_id"
+    t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["course_id"], name: "index_past_exams_on_course_id"
@@ -237,8 +245,4 @@ ActiveRecord::Schema.define(version: 2018_10_17_051742) do
     t.index ["user_id"], name: "index_users_events_on_user_id"
   end
 
-  add_foreign_key "books", "users"
-  add_foreign_key "courses", "semesters"
-  add_foreign_key "departments", "colleges"
-  add_foreign_key "events", "users"
 end
